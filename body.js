@@ -17,8 +17,7 @@ window.addEventListener("DOMContentLoaded", function () {
     duration: 8,
     repeat: -1,
     ease: "none",
-  });*/
-
+  });
   gsap.to(".offerings_bg-track-gradient", {
     motionPath: {
       path: [
@@ -35,6 +34,7 @@ window.addEventListener("DOMContentLoaded", function () {
     repeat: -1,
     ease: "none",
   });
+  */
 
   /* Technologies */
   ScrollTrigger.create({
@@ -237,8 +237,6 @@ function initProcess() {
   });
 }
 
-console.log("hi");
-
 function initFAQ() {
   const bg = document.querySelector(".faq_bg-gradient");
 
@@ -264,6 +262,7 @@ function trackVisibility() {
       onEnter: () => {
         el.classList.add("is-visible");
       },
+      once: true,
     });
   });
 }

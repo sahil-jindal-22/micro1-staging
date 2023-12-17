@@ -166,20 +166,20 @@
   }
 }
 
-/* Solution - 4th card */
+/* 4th card */
 #group-1,
 #group-2,
 #group-3 {
   opacity: 0;
 }
 .is-visible #group-1 {
-  animation: squareOpacity1 15s ease infinite;
+  animation: squareOpacity1 11s linear infinite 750ms;
 }
 .is-visible #group-2 {
-  animation: squareOpacity2 15s ease infinite;
+  animation: squareOpacity2 11s linear infinite 750ms;
 }
 .is-visible #group-3 {
-  animation: squareOpacity3 15s ease infinite;
+  animation: squareOpacity3 11s linear infinite 750ms;
 }
 
 @keyframes squareOpacity1 {
@@ -254,15 +254,18 @@
 
 .offerings_globe-line.is-1 .offerings_globe-gradient {
   transform: translate(-100%);
-  animation: globeLines1 7s ease-in-out infinite;
-  width: 50%;
+  animation: globeLines1 7s ease-in-out infinite paused;
+}
+
+.is-visible .offerings_globe-line.is-1 .offerings_globe-gradient {
+  animation-play-state: running;
 }
 
 @keyframes globeLines1 {
-  0%,
-  20% {
-    transform: translateZ(0) translate(300px);
+  0% {
+    transform: translateZ(0) translate(75px);
   }
+  50%,
   100% {
     transform: translateZ(0) translate(-100%);
   }
@@ -270,18 +273,20 @@
 
 .offerings_globe-line.is-2 .offerings_globe-gradient {
   transform: translate(-100%);
-  animation: globeLines2 7s ease-in-out infinite;
-  width: 50%;
-  animation-delay: 5s;
+  animation: globeLines2 7s ease-in-out infinite paused;
+}
+
+.is-visible .offerings_globe-line.is-2 .offerings_globe-gradient {
+  animation-play-state: running;
 }
 
 @keyframes globeLines2 {
   0%,
-  20% {
+  50% {
     transform: translateZ(0) translate(-100%);
   }
   100% {
-    transform: translateZ(0) translate(300px);
+    transform: translateZ(0) translate(100px);
   }
 }
 
@@ -299,7 +304,11 @@
 
 .offerings_grid-gradient {
   transform: translate(-100%, 100px) rotate(65deg);
-  animation: grid-line 7s ease infinite;
+  animation: grid-line 7s ease infinite paused;
+}
+
+.is-visible .offerings_grid-gradient {
+  animation-play-state: running;
 }
 
 @keyframes grid-line {
@@ -317,9 +326,13 @@
   transition-property: opacity;
   transition-duration: 600ms;
   will-change: transform, border-radius, opacity;
-  animation: scaleCircSmall 2.5s infinite ease-in-out;
+  animation: scaleCircSmall 2.5s infinite ease-in-out paused;
   border: 1px solid #333da3;
   z-index: -2;
+}
+
+.is-visible .offeriings_bg-circ {
+  animation-play-state: running;
 }
 /*
 .offerings_bg-path {
@@ -372,19 +385,26 @@
 }
 */
 
-/* Logos */
-.logos_divider_icon {
+/* -- Divider -- */
+.divider_icon {
   animation: rotateIcon 5s linear infinite;
 }
 
-.talent_solution_bg.is-4 rect {
-  transform-box: content-box;
-  transform-origin: center;
+.is-visible .divider_line {
+  animation: showLine linear 1.5s 50ms backwards;
 }
 
-.talent_solution_bg.is-4 rect {
-  transform-box: content-box;
-  transform-origin: center;
+.is-visible.clutch_component .divider_line {
+  animation: showLine linear 1s backwards;
+}
+
+@keyframes showLine {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
 }
 
 /* -- Process -- */
@@ -399,7 +419,7 @@
   color: #eee;
 }
 
-/* Nav */
+/* -- Nav -- */
 .nav_menu-link,
 .footer_link {
   position: relative;
