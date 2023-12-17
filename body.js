@@ -1,5 +1,63 @@
+window.addEventListener("DOMContentLoaded", function () {
+  if (!gsap) return;
+
+  gsap.registerPlugin(MotionPathPlugin);
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* Offerings 
+  gsap.to("#code-object", {
+    motionPath: {
+      path: "#code-path",
+      align: "#code-path",
+      alignOrigin: [0.5, 0.5],
+      curviness: 10,
+      immediateRender: true,
+    },
+    transformOrigin: "50% 50%",
+    duration: 8,
+    repeat: -1,
+    ease: "none",
+  });*/
+
+  gsap.to(".offerings_bg-track-gradient", {
+    motionPath: {
+      path: [
+        { x: 0, y: 0 },
+        { x: 100, y: 100 },
+      ],
+      // align: "#code-path",
+      alignOrigin: [0.5, 0.5],
+      curviness: 10,
+      immediateRender: true,
+    },
+    transformOrigin: "50% 50%",
+    duration: 8,
+    repeat: -1,
+    ease: "none",
+  });
+
+  /* Technologies */
+  ScrollTrigger.create({
+    trigger: ".tech-matter_container",
+    start: "top bottom",
+    onEnter: () => {
+      initTech();
+    },
+    once: true,
+  });
+
+  /* Process */
+  initProcess();
+
+  /* FAQ */
+  initFAQ();
+
+  /* Track visibility */
+  trackVisibility();
+});
+
 /* Technologies */
-const initTech = function () {
+function initTech() {
   const matterContainer = document.querySelector(".tech-matter_container");
   const THICCNESS = 60;
   const width = window.innerWidth;
@@ -148,43 +206,7 @@ const initTech = function () {
   setTimeout(function () {
     Composite.add(engine.world, [topWall]);
   }, 1500);
-};
-
-window.addEventListener("DOMContentLoaded", function () {
-  gsap.registerPlugin(MotionPathPlugin);
-  gsap.registerPlugin(ScrollTrigger);
-
-  /* Offerings */
-  gsap.to("#code-object", {
-    motionPath: {
-      path: "#code-path",
-      align: "#code-path",
-      alignOrigin: [0.5, 0.5],
-      curviness: 10,
-      immediateRender: true,
-    },
-    transformOrigin: "50% 50%",
-    duration: 8,
-    repeat: -1,
-    ease: "none",
-  });
-
-  /* Technologies */
-  ScrollTrigger.create({
-    trigger: ".tech-matter_container",
-    start: "top bottom",
-    onEnter: () => {
-      initTech();
-    },
-    once: true,
-  });
-
-  /* Process */
-  initProcess();
-
-  /* FAQ */
-  initFAQ();
-});
+}
 
 function initProcess() {
   const wrapper = document.querySelector(".process_component");
@@ -229,5 +251,19 @@ function initFAQ() {
     },
     width: "100%",
     borderRadius: 0,
+  });
+}
+
+function trackVisibility() {
+  const elements = document.querySelectorAll("[data-track-visibility]");
+
+  elements.forEach((el) => {
+    ScrollTrigger.create({
+      trigger: el,
+      start: "top bottom",
+      onEnter: () => {
+        el.classList.add("is-visible");
+      },
+    });
   });
 }
