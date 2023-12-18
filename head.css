@@ -379,12 +379,6 @@
 */
 
 /* ---- Global ---- */
-/* 
-.wf-design-mode .marquee_track {
-  animation: none;
-}
-*/
-
 /* -- Divider -- */
 .divider_icon {
   animation: rotateIcon 5s linear infinite;
@@ -421,27 +415,31 @@
 
 /* -- Nav -- */
 .nav_menu-link,
-.footer_link {
+.footer_link,
+.sitemap_links {
   position: relative;
   transition: color 0.2s linear;
 }
 
 .nav_menu-link:hover,
 .footer_link:hover,
-.footer_link.w--current {
+.footer_link.w--current,
+.sitemap_links:hover {
   color: #fff;
 }
 
 .nav_menu-link.current:after,
 .nav_menu-link:hover:after,
 .footer_link.current:after,
-.footer_link:hover:after {
+.footer_link:hover:after,
+.sitemap_links:hover:after {
   transform: scale(1);
   transform-origin: left;
 }
 
 .nav_menu-link:after,
-.footer_link:after {
+.footer_link:after,
+.sitemap_links:after {
   content: "";
   position: absolute;
   bottom: 4px;
@@ -457,6 +455,10 @@
 
 .footer_link:after {
   bottom: -3px;
+}
+
+.sitemap_links:after {
+  bottom: 0px;
 }
 
 .dropdown .nav_menu-link:after,

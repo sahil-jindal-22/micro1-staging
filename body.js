@@ -99,15 +99,15 @@ function initTech() {
       radius = 77;
       scale = 1.5;
       if (isMobile) {
-        radius = 52;
-        scale = 1;
+        radius = 47;
+        scale = 0.9;
       }
     } else {
       radius = 67;
       scale = 1.3;
       if (isMobile) {
-        radius = 42;
-        scale = 0.8;
+        radius = 37;
+        scale = 0.7;
       }
     }
 
