@@ -1,40 +1,9 @@
 window.addEventListener("DOMContentLoaded", function () {
   if (!gsap) return;
+  console.log(1);
 
   gsap.registerPlugin(MotionPathPlugin);
   gsap.registerPlugin(ScrollTrigger);
-
-  /* Offerings 
-  gsap.to("#code-object", {
-    motionPath: {
-      path: "#code-path",
-      align: "#code-path",
-      alignOrigin: [0.5, 0.5],
-      curviness: 10,
-      immediateRender: true,
-    },
-    transformOrigin: "50% 50%",
-    duration: 8,
-    repeat: -1,
-    ease: "none",
-  });
-  gsap.to(".offerings_bg-track-gradient", {
-    motionPath: {
-      path: [
-        { x: 0, y: 0 },
-        { x: 100, y: 100 },
-      ],
-      // align: "#code-path",
-      alignOrigin: [0.5, 0.5],
-      curviness: 10,
-      immediateRender: true,
-    },
-    transformOrigin: "50% 50%",
-    duration: 8,
-    repeat: -1,
-    ease: "none",
-  });
-  */
 
   /* Technologies */
   ScrollTrigger.create({
@@ -54,6 +23,9 @@ window.addEventListener("DOMContentLoaded", function () {
 
   /* Track visibility */
   trackVisibility();
+
+  /* Animate Headings */
+  animateHeadings();
 });
 
 /* Technologies */
@@ -92,6 +64,8 @@ function initTech() {
   ) {
     const size = img.attributes.render.value;
     let radius, scale;
+    const img2 = document.createElement("svg");
+    img2.src = img.src;
 
     console.log(size, img.src);
 
@@ -114,13 +88,13 @@ function initTech() {
     let circle = Bodies.circle(
       matterContainer.clientWidth / 2,
       -500,
-      radius ? radius : 52,
+      radius ? radius : 100,
       {
         render: {
           sprite: {
             texture: img.src,
-            yScale: scale ? scale : 1,
-            xScale: scale ? scale : 1,
+            yScale: scale ? scale : 2,
+            xScale: scale ? scale : 2,
           },
         },
       }
@@ -262,7 +236,41 @@ function trackVisibility() {
       onEnter: () => {
         el.classList.add("is-visible");
       },
-      once: true,
+    });
+  });
+}
+
+function animateHeadings() {
+  // select targets
+  const titleEls = document.querySelectorAll("[data-text-animate]");
+
+  // loop through each target
+  titleEls.forEach((el) => {
+    // split text
+    const splittedText = new SplitType(el);
+
+    // tween
+    const titleTween = gsap.fromTo(
+      splittedText.chars,
+      {
+        y: 25,
+        opacity: 0,
+      },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.7,
+        stagger: 0.04,
+        ease: "power3.out",
+      }
+    );
+
+    // attach scrolltrigger
+    ScrollTrigger.create({
+      trigger: el,
+      start: "top bottom",
+      end: "bottom center",
+      animation: titleTween,
     });
   });
 }

@@ -36,6 +36,24 @@
   }
 }
 
+@keyframes scaleCircMedium {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  95% {
+    transform: scale(1.75);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+}
+
 @keyframes scaleCircSmall {
   0% {
     transform: scale(0.9);
@@ -59,22 +77,137 @@
   animation: rotateIcon 15s infinite linear;
 }
 
-/* -- Problem -- */
-.is-visible .problem-line {
-  stroke-dasharray: 6500;
-  stroke-dashoffset: 2000;
-  animation: problemDash 2.5s linear forwards;
-  transform-box: content-box;
-  transform-origin: top;
+/* Border */
+@media screen and (min-width: 1350px) {
+  .video_border-wrap {
+    pointer-events: none;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask-composite: xor;
+    display: block;
+  }
+
+  .video_border-gradient {
+    animation: videoBorder 15s linear infinite backwards;
+  }
+
+  .video_border-gradient:nth-child(2) {
+    animation-delay: 4s;
+  }
+
+  @keyframes videoBorder {
+    0% {
+      transform: translateZ(0) translate(-50%);
+      opacity: 0;
+    }
+
+    20% {
+      transform: translateZ(0) translate(-50%, -140%);
+      opacity: 1;
+    }
+
+    21% {
+      transform: translateZ(0) translate(-50%, -140%) rotate(45deg);
+    }
+
+    30% {
+      transform: translateZ(0) translate(50%, -190%) rotate(90deg);
+    }
+
+    46% {
+      transform: translateZ(0) translate(270%, -190%) rotate(90deg);
+    }
+
+    47% {
+      transform: translateZ(0) translate(270%, -190%) rotate(135deg);
+    }
+
+    54% {
+      transform: translateZ(0) translate(320%, -140%) rotate(180deg);
+      opacity: 1;
+    }
+
+    70% {
+      transform: translateZ(0) translate(320%, -20%) rotate(180deg);
+      opacity: 0;
+    }
+    100% {
+      transform: translateZ(0) translate(320%, -20%) rotate(180deg);
+      opacity: 0;
+    }
+  }
 }
 
+/* -- Problem -- */
 @keyframes problemDash {
   0% {
-    stroke-dashoffset: 2000;
+    stroke-dashoffset: 2500;
   }
   100% {
     stroke-dashoffset: 0;
   }
+}
+
+@keyframes time {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes hammerIcon {
+  0% {
+    transform: rotate(0deg);
+  }
+  15% {
+    transform: rotate(20deg);
+  }
+  30% {
+    transform: rotate(0deg);
+  }
+  45% {
+    transform: rotate(20deg);
+  }
+  60%,
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.is-visible .problem-line {
+  stroke-dasharray: 6500;
+  stroke-dashoffset: 2500;
+  animation: problemDash 3s linear forwards;
+  transform-box: content-box;
+  transform-origin: top;
+}
+
+.is-visible #hour {
+  animation: time 30s linear infinite;
+  transform-box: content-box;
+  transform-origin: bottom;
+}
+
+.is-visible #minute {
+  animation: time 5s linear infinite;
+  transform-box: content-box;
+}
+
+.is-visible #dollar-icon {
+  animation: dollarIcon 3s linear infinite;
+}
+
+.is-visible #hammer-icon {
+  transform-origin: bottom left;
+  transform-box: content-box;
+  animation: hammerIcon 3.5s ease-in-out infinite;
+}
+
+.is-visible .scale-circ {
+  transform-origin: center;
+  transform-box: content-box;
+  animation: scaleCircMedium 3s infinite;
 }
 
 /* -- Solution -- */
@@ -141,6 +274,10 @@
   }
 }
 
+.is-visible #solution-globe {
+  animation: rotateIcon 15s linear infinite;
+}
+
 /* 3rd card */
 #bg-square-1,
 #bg-square-2 {
@@ -173,13 +310,13 @@
   opacity: 0;
 }
 .is-visible #group-1 {
-  animation: squareOpacity1 11s linear infinite 750ms;
+  animation: squareOpacity1 9s linear infinite 750ms;
 }
 .is-visible #group-2 {
-  animation: squareOpacity2 11s linear infinite 750ms;
+  animation: squareOpacity2 9s linear infinite 750ms;
 }
 .is-visible #group-3 {
-  animation: squareOpacity3 11s linear infinite 750ms;
+  animation: squareOpacity3 9s linear infinite 750ms;
 }
 
 @keyframes squareOpacity1 {
@@ -379,6 +516,12 @@
 */
 
 /* ---- Global ---- */
+
+/* fix glitches  - text animation */
+.word {
+  font-kerning: none;
+}
+
 /* -- Divider -- */
 .divider_icon {
   animation: rotateIcon 5s linear infinite;
