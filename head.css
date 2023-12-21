@@ -284,6 +284,20 @@
   border-color: #4757eb;
 }
 
+@media screen and (max-width: 767px) {
+  .is-visible .talent_solution_bg-circ-bg {
+    border-color: #f5e2817c;
+  }
+
+  .talent_solution_bg-circ.is-2 .talent_solution_bg-circ-bg {
+    border-color: #87caf785;
+  }
+
+  .talent_solution_bg-circ.is-3 .talent_solution_bg-circ-bg {
+    border-color: #4757eb80;
+  }
+}
+
 /* 2nd card */
 .is-visible #plus-icon {
   animation: rotateIcon 5s infinite linear;
@@ -497,7 +511,7 @@
 }
 
 .is-visible .offerings_grid-gradient {
-  animation: grid-line 7s ease infinite;
+  animation: grid-line 5s linear infinite;
 }
 
 @keyframes grid-line {
@@ -517,6 +531,12 @@
   will-change: transform, border-radius, opacity;
   border: 1px solid #333da3;
   z-index: -2;
+}
+
+@media screen and (max-width: 767px) {
+  .offeriings_bg-circ {
+    border-color: #333ca39f;
+  }
 }
 
 .is-visible .offeriings_bg-circ {
