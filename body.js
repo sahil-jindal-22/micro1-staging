@@ -1,35 +1,51 @@
 window.addEventListener("DOMContentLoaded", function () {
   if (!gsap) return;
-  console.log(1);
 
   gsap.registerPlugin(MotionPathPlugin);
   gsap.registerPlugin(ScrollTrigger);
 
-  /* Technologies */
+  // only desktop
+  if (window.innerWidth > 992) {
+    // Change images
+    changeDevImages();
+  }
+
+  // Track visibility
+  trackVisibility();
+});
+
+window.addEventListener("load", function () {
+  if (!gsap) return;
+
+  // only desktop
+  if (window.innerWidth > 992) {
+    // Process
+    initProcess();
+
+    // FAQ
+    initFAQ();
+  }
+
+  // Animate Headings
+  animateHeadings();
+
+  // Technologies
+  initTech();
+});
+
+function initTech() {
   ScrollTrigger.create({
     trigger: ".tech-matter_container",
     start: "top bottom",
     onEnter: () => {
-      initTech();
+      renderTech();
     },
     once: true,
   });
-
-  /* Process */
-  initProcess();
-
-  /* FAQ */
-  initFAQ();
-
-  /* Track visibility */
-  trackVisibility();
-
-  /* Animate Headings */
-  animateHeadings();
-});
+}
 
 /* Technologies */
-function initTech() {
+function renderTech() {
   const matterContainer = document.querySelector(".tech-matter_container");
   const THICCNESS = 60;
   const width = window.innerWidth;
@@ -66,8 +82,6 @@ function initTech() {
     let radius, scale;
     const img2 = document.createElement("svg");
     img2.src = img.src;
-
-    console.log(size, img.src);
 
     if (size == "big") {
       radius = 77;
@@ -191,19 +205,16 @@ function initProcess() {
 
   imgList.forEach((img, i) => {
     const textWrap = textList[i];
-    console.log(i);
 
     ScrollTrigger.create({
       trigger: img,
       start: "top center",
       end: "bottom center",
       onEnter: () => {
-        console.log("enter", i, img);
         textList.forEach((text) => text.classList.remove("is-active"));
         textWrap.classList.add("is-active");
       },
       onEnterBack: () => {
-        console.log("enterback", i);
         textList.forEach((text) => text.classList.remove("is-active"));
         textWrap.classList.add("is-active");
       },
@@ -233,8 +244,18 @@ function trackVisibility() {
     ScrollTrigger.create({
       trigger: el,
       start: "top bottom",
+      end: "bottom top",
       onEnter: () => {
         el.classList.add("is-visible");
+      },
+      onLeave: () => {
+        el.classList.remove("is-visible");
+      },
+      onEnterBack: () => {
+        el.classList.add("is-visible");
+      },
+      onLeaveBack: () => {
+        el.classList.remove("is-visible");
       },
     });
   });
@@ -259,9 +280,9 @@ function animateHeadings() {
       {
         y: 0,
         opacity: 1,
-        duration: 0.7,
+        duration: 0.8,
         stagger: 0.04,
-        ease: "power3.out",
+        ease: "power2.out",
       }
     );
 
@@ -269,8 +290,41 @@ function animateHeadings() {
     ScrollTrigger.create({
       trigger: el,
       start: "top bottom",
-      end: "bottom center",
+      end: "bottom top",
       animation: titleTween,
+      once: true,
     });
+  });
+}
+
+function changeDevImages() {
+  const imgWrappers = document.querySelectorAll(".talent_bg_dev-images");
+
+  imgWrappers.forEach((_, i) => {
+    const images = imgWrappers[i].querySelectorAll("img");
+
+    let target = 1;
+
+    setInterval(() => {
+      images.forEach((img) => img.classList.remove("is-visible"));
+      images[target].classList.add("is-visible");
+
+      if (target == 2) target = 0;
+      else target++;
+    }, 5000);
+
+    /*
+    // attach scrolltrigger
+    ScrollTrigger.create({
+      trigger: ".section_hero_talent",
+      start: "top bottom",
+      end: "bottom top",
+      onLeave: () => {
+        clearInterval(devInterval);
+        console.log("cleared");
+      },
+      once: true,
+    });
+    */
   });
 }
