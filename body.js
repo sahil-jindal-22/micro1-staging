@@ -312,19 +312,5 @@ function changeDevImages() {
       if (target == 2) target = 0;
       else target++;
     }, 5000);
-
-    /*
-    // attach scrolltrigger
-    ScrollTrigger.create({
-      trigger: ".section_hero_talent",
-      start: "top bottom",
-      end: "bottom top",
-      onLeave: () => {
-        clearInterval(devInterval);
-        console.log("cleared");
-      },
-      once: true,
-    });
-    */
   });
 }
