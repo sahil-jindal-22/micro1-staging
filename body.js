@@ -1,21 +1,25 @@
+// General code after DOM load
 window.addEventListener("DOMContentLoaded", function () {
-  if (!gsap) return;
-
-  gsap.registerPlugin(MotionPathPlugin);
-  gsap.registerPlugin(ScrollTrigger);
-
   // only desktop
   if (window.innerWidth > 992) {
     // Change images
     changeDevImages();
   }
+});
+
+// Init GSAP animations after DOM load
+window.addEventListener("DOMContentLoaded", function () {
+  if (window.gsap === undefined) return;
+
+  gsap.registerPlugin(ScrollTrigger);
 
   // Track visibility
   trackVisibility();
 });
 
+// Init GSAP animations after window load
 window.addEventListener("load", function () {
-  if (!gsap) return;
+  if (window.gsap === undefined) return;
 
   // only desktop
   if (window.innerWidth > 992) {
@@ -34,22 +38,28 @@ window.addEventListener("load", function () {
 });
 
 function initTech() {
+  const techContainer = document.querySelector(".tech-matter_container");
+
+  if (!techContainer) return;
+
   ScrollTrigger.create({
-    trigger: ".tech-matter_container",
+    trigger: techContainer,
     start: "top bottom",
     onEnter: () => {
-      renderTech();
+      renderTech(techContainer);
     },
     once: true,
   });
 }
 
 /* Technologies */
-function renderTech() {
-  const matterContainer = document.querySelector(".tech-matter_container");
+function renderTech(matterContainer) {
+  if (!matterContainer) return;
+
   const THICCNESS = 60;
   const width = window.innerWidth;
-  const isMobile = width < 767;
+  const isMobile = width < 600;
+  const isTablet = width < 992 && width > 600;
 
   // module aliases
   var Engine = Matter.Engine,
@@ -72,6 +82,7 @@ function renderTech() {
       background: "transparent",
       wireframes: false,
       showAngleIndicator: false,
+      pixelRatio: "auto",
     },
   });
 
@@ -86,16 +97,37 @@ function renderTech() {
     if (size == "big") {
       radius = 77;
       scale = 1.5;
-      if (isMobile) {
-        radius = 47;
-        scale = 0.9;
+      if (isTablet) {
+        radius = 62;
+        scale = 1.2;
       }
-    } else {
-      radius = 67;
-      scale = 1.3;
       if (isMobile) {
         radius = 37;
         scale = 0.7;
+      }
+    }
+    if (size == "medium") {
+      radius = 62;
+      scale = 1.2;
+      if (isTablet) {
+        radius = 52;
+        scale = 1;
+      }
+      if (isMobile) {
+        radius = 34;
+        scale = 0.65;
+      }
+    }
+    if (size == "small") {
+      radius = 56;
+      scale = 1.1;
+      if (isTablet) {
+        radius = 47;
+        scale = 0.9;
+      }
+      if (isMobile) {
+        radius = 29;
+        scale = 0.55;
       }
     }
 
@@ -104,6 +136,8 @@ function renderTech() {
       -500,
       radius ? radius : 100,
       {
+        friction: 0.3,
+        restitution: 0.2,
         render: {
           sprite: {
             texture: img.src,
@@ -198,6 +232,9 @@ function renderTech() {
 
 function initProcess() {
   const wrapper = document.querySelector(".process_component");
+
+  if (!wrapper) return;
+
   const textList = wrapper.querySelectorAll(".process_text");
   const imgList = [...wrapper.querySelectorAll(".process_img")];
 
@@ -225,6 +262,8 @@ function initProcess() {
 function initFAQ() {
   const bg = document.querySelector(".faq_bg-gradient");
 
+  if (!bg) return;
+
   gsap.to(bg, {
     scrollTrigger: {
       trigger: bg,
@@ -239,6 +278,8 @@ function initFAQ() {
 
 function trackVisibility() {
   const elements = document.querySelectorAll("[data-track-visibility]");
+
+  if (!elements.length > 0) return;
 
   elements.forEach((el) => {
     ScrollTrigger.create({
@@ -265,6 +306,8 @@ function animateHeadings() {
   // select targets
   const titleEls = document.querySelectorAll("[data-text-animate]");
 
+  if (!titleEls.length > 0) return;
+
   // loop through each target
   titleEls.forEach((el) => {
     // split text
@@ -280,9 +323,9 @@ function animateHeadings() {
       {
         y: 0,
         opacity: 1,
-        duration: 0.8,
-        stagger: 0.04,
-        ease: "power2.out",
+        duration: 0.5,
+        stagger: 0.03,
+        ease: "power3.out",
       }
     );
 
@@ -293,12 +336,15 @@ function animateHeadings() {
       end: "bottom top",
       animation: titleTween,
       once: true,
+      // markers: true,
     });
   });
 }
 
 function changeDevImages() {
   const imgWrappers = document.querySelectorAll(".talent_bg_dev-images");
+
+  if (!imgWrappers.length > 0) return;
 
   imgWrappers.forEach((_, i) => {
     const images = imgWrappers[i].querySelectorAll("img");

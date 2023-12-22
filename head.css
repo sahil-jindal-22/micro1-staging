@@ -622,12 +622,17 @@
   animation: rotateIcon 5s linear infinite;
 }
 
-.is-visible .divider_line {
-  animation: showLine linear 1.5s 50ms backwards;
+.divider_line {
+  animation: showLine linear 1.5s 50ms backwards paused;
 }
 
+.clutch_component .divider_line {
+  animation: showLine linear 1s backwards paused;
+}
+
+.is-visible .divider_line,
 .is-visible.clutch_component .divider_line {
-  animation: showLine linear 1s backwards;
+  animation-play-state: running;
 }
 
 @keyframes showLine {
