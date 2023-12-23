@@ -131,13 +131,13 @@
 
 .is-visible #hour {
   animation: time 30s linear infinite;
-  transform-box: content-box;
+  transform-box: fill-box;
   transform-origin: bottom;
 }
 
 .is-visible #minute {
   animation: time 5s linear infinite;
-  transform-box: content-box;
+  transform-box: fill-box;
 }
 
 .is-visible #dollar-icon {
@@ -152,7 +152,7 @@
 
 .is-visible .scale-circ {
   transform-origin: center;
-  transform-box: content-box;
+  transform-box: fill-box;
   animation: scaleCircMedium 3s infinite;
 }
 
@@ -246,7 +246,7 @@
 }
 
 #stars path {
-  transform-box: content-box;
+  transform-box: fill-box;
   transform-origin: center;
 }
 
@@ -301,7 +301,7 @@
 /* 2nd card */
 .is-visible #plus-icon {
   animation: rotateIcon 5s infinite linear;
-  transform-box: content-box;
+  transform-box: fill-box;
   transform-origin: center;
 }
 
@@ -560,6 +560,7 @@
     mask-composite: xor;
     -webkit-mask-composite: xor;
     display: block;
+    mask-composite: exclude;
   }
 
   .video_border-gradient {
