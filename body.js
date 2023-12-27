@@ -236,7 +236,9 @@ function initProcess() {
   if (!wrapper) return;
 
   const textList = wrapper.querySelectorAll(".process_text");
-  const imgList = [...wrapper.querySelectorAll(".process_img")];
+  const imgList = [
+    ...wrapper.querySelectorAll(".process_img, .how-slide-wrap.is-v11"),
+  ];
 
   textList[0].classList.add("is-active");
 
@@ -284,6 +286,7 @@ function trackVisibility() {
   elements.forEach((el) => {
     ScrollTrigger.create({
       trigger: el,
+      // markers: true,
       start: "top bottom",
       end: "bottom top",
       onEnter: () => {
