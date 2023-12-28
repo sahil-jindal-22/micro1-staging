@@ -619,12 +619,28 @@
 }
 
 /* Divider */
-.is-visible .divider_icon {
+.divider_icon {
   animation: rotateIcon 5s linear infinite;
 }
 
+[data-track-visibility] .divider_icon {
+  animation-play-state: paused;
+}
+
+.is-visible[data-track-visibility] .divider_icon {
+  animation-play-state: running;
+}
+
 .divider_line {
-  animation: showLine linear 1.5s 50ms backwards paused;
+  animation: showLine linear 1.5s 50ms backwards;
+}
+
+[data-track-visibility] .divider_line {
+  animation-play-state: paused;
+}
+
+.is-visible[data-track-visibility] .divider_line {
+  animation-play-state: running;
 }
 
 .clutch_component .divider_line {
