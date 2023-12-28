@@ -1,36 +1,40 @@
+// General code after DOM load
 window.addEventListener("DOMContentLoaded", function () {
+  // only desktop
   if (window.innerWidth > 992) {
-    // For homepage hero section
+    // Change images
     changeDevImages();
   }
+});
 
-  // toggle visibility for css
-  trackVisibility();
-
-  // GSAP based code next
+// Init GSAP animations after DOM load
+window.addEventListener("DOMContentLoaded", function () {
   if (window.gsap === undefined) return;
 
   gsap.registerPlugin(ScrollTrigger);
 
-  ScrollTrigger.config({
-    normalizeScroll: true,
-    // autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
-  });
+  // Track visibility
+  trackVisibility();
 });
 
+// Init GSAP animations after window load
 window.addEventListener("load", function () {
-  initTech();
-
-  // GSAP based code next
   if (window.gsap === undefined) return;
 
+  // only desktop
   if (window.innerWidth > 992) {
+    // Process
     initProcess();
 
+    // FAQ
     initFAQ();
   }
 
+  // Animate Headings
   animateHeadings();
+
+  // Technologies
+  initTech();
 });
 
 function initTech() {
@@ -38,22 +42,17 @@ function initTech() {
 
   if (!techContainer) return;
 
-  const options = {};
-  const observer = new IntersectionObserver(function (entries, observer) {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        renderTech(techContainer);
-
-        observer.unobserve(entry.target);
-
-        console.log("done");
-      }
-    });
-  }, options);
-
-  observer.observe(techContainer);
+  ScrollTrigger.create({
+    trigger: techContainer,
+    start: "top bottom",
+    onEnter: () => {
+      renderTech(techContainer);
+    },
+    once: true,
+  });
 }
 
+/* Technologies */
 function renderTech(matterContainer) {
   if (!matterContainer) return;
 
@@ -281,24 +280,29 @@ function initFAQ() {
 
 function trackVisibility() {
   const elements = document.querySelectorAll("[data-track-visibility]");
-  console.log(elements);
 
-  if (!elements.length) return;
+  if (!elements.length > 0) return;
 
-  const options = {};
-  const observer = new IntersectionObserver(function (entries) {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("is-visible");
-        console.log("in view", entry.target);
-      } else {
-        entry.target.classList.remove("is-visible");
-        console.log("out of view", entry.target);
-      }
+  elements.forEach((el) => {
+    ScrollTrigger.create({
+      trigger: el,
+      // markers: true,
+      start: "top bottom",
+      end: "bottom top",
+      onEnter: () => {
+        el.classList.add("is-visible");
+      },
+      onLeave: () => {
+        el.classList.remove("is-visible");
+      },
+      onEnterBack: () => {
+        el.classList.add("is-visible");
+      },
+      onLeaveBack: () => {
+        el.classList.remove("is-visible");
+      },
     });
-  }, options);
-
-  elements.forEach((el) => observer.observe(el));
+  });
 }
 
 function animateHeadings() {
