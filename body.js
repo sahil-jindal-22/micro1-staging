@@ -6,37 +6,37 @@ window.addEventListener("DOMContentLoaded", function () {
 
   // toggle visibility for css
   trackVisibility();
-
-  // GSAP based code next
-  if (window.gsap === undefined) return;
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  ScrollTrigger.config({
-    normalizeScroll: true,
-    // autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
-  });
 });
 
 window.addEventListener("load", function () {
   initTech();
 
+  trackLoginBtn();
+
   // GSAP based code next
   if (window.gsap === undefined) return;
+
+  ScrollTrigger.config({
+    normalizeScroll: true,
+  });
+
+  animateHeadings();
 
   if (window.innerWidth > 992) {
     initProcess();
 
     initFAQ();
   }
-
-  animateHeadings();
 });
 
-function initTech() {
+async function initTech() {
   const techContainer = document.querySelector(".tech-matter_container");
 
   if (!techContainer) return;
+
+  await loadScript(
+    "https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"
+  );
 
   const options = {};
   const observer = new IntersectionObserver(function (entries, observer) {
@@ -293,7 +293,6 @@ function trackVisibility() {
         console.log("in view", entry.target);
       } else {
         entry.target.classList.remove("is-visible");
-        console.log("out of view", entry.target);
       }
     });
   }, options);
@@ -301,11 +300,13 @@ function trackVisibility() {
   elements.forEach((el) => observer.observe(el));
 }
 
-function animateHeadings() {
+async function animateHeadings() {
   // select targets
   const titleEls = document.querySelectorAll("[data-text-animate]");
 
   if (!titleEls.length > 0) return;
+
+  await loadScript("https://unpkg.com/split-type");
 
   // loop through each target
   titleEls.forEach((el) => {
@@ -358,4 +359,50 @@ function changeDevImages() {
       else target++;
     }, 5000);
   });
+}
+
+// Track login button
+function trackLoginBtn() {
+  const loginBtn = document.querySelector("#login-btn");
+
+  if (!loginBtn || !loginBtn.href.includes("login")) return;
+
+  if (location.href.includes("engineer")) return;
+
+  // Pass UTM data to the signup link
+  const { utm } = customTrackData;
+
+  let first_page, last_page;
+
+  if (customTrackData.first_page) {
+    first_page = document.createElement("a");
+    first_page.href = customTrackData.first_page;
+    first_page = first_page.pathname;
+  }
+
+  if (customTrackData.last_page) {
+    last_page = document.createElement("a");
+    last_page.href = customTrackData.last_page;
+    last_page = last_page.pathname;
+  }
+
+  const liveDomain = "www.client.micro1.ai";
+  const stagingDomain = "dev.d1y3udqq47tapp.amplifyapp.com";
+
+  let gptVetting = false;
+
+  if (location.href.includes("gpt") || first_page.includes("gpt"))
+    gptVetting = true;
+
+  const signupLink = `https://${
+    location.href.includes("staging") ? stagingDomain : liveDomain
+  }/login?utm_campaign=${utm.utm_campaign ? utm.utm_campaign : ""}&utm_medium=${
+    utm.utm_medium ? utm.utm_medium : ""
+  }&utm_source=${utm.utm_source ? utm.utm_source : ""}&utm_content=${
+    utm.utm_content ? utm.utm_content : ""
+  }&first_page=${first_page ? first_page : ""}&last_page=${
+    last_page ? last_page : ""
+  }&source=${gptVetting ? "gpt-vetting" : "search-talent"}`;
+
+  loginBtn.href = signupLink;
 }
