@@ -4,28 +4,23 @@ window.addEventListener("DOMContentLoaded", function () {
     changeDevImages();
   }
 
-  // toggle visibility for css
   trackVisibility();
-});
-
-window.addEventListener("load", function () {
-  initTech();
 
   trackLoginBtn();
 
+  initTech();
+
   // GSAP based code next
-  if (window.gsap === undefined) return;
+  if (window.gsap !== undefined) {
+    ScrollTrigger.config({
+      normalizeScroll: true,
+    });
 
-  ScrollTrigger.config({
-    normalizeScroll: true,
-  });
+    if (window.innerWidth > 992) {
+      initProcess();
 
-  animateHeadings();
-
-  if (window.innerWidth > 992) {
-    initProcess();
-
-    initFAQ();
+      initFAQ();
+    }
   }
 });
 
@@ -228,7 +223,7 @@ function renderTech(matterContainer) {
 
   setTimeout(function () {
     Composite.add(engine.world, [topWall]);
-  }, 1500);
+  }, 2000);
 }
 
 function initProcess() {
@@ -281,7 +276,6 @@ function initFAQ() {
 
 function trackVisibility() {
   const elements = document.querySelectorAll("[data-track-visibility]");
-  console.log(elements);
 
   if (!elements.length) return;
 
@@ -290,7 +284,6 @@ function trackVisibility() {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("is-visible");
-        console.log("in view", entry.target);
       } else {
         entry.target.classList.remove("is-visible");
       }
@@ -298,47 +291,6 @@ function trackVisibility() {
   }, options);
 
   elements.forEach((el) => observer.observe(el));
-}
-
-async function animateHeadings() {
-  // select targets
-  const titleEls = document.querySelectorAll("[data-text-animate]");
-
-  if (!titleEls.length > 0) return;
-
-  await loadScript("https://unpkg.com/split-type");
-
-  // loop through each target
-  titleEls.forEach((el) => {
-    // split text
-    const splittedText = new SplitType(el);
-
-    // tween
-    const titleTween = gsap.fromTo(
-      splittedText.chars,
-      {
-        y: 25,
-        opacity: 0,
-      },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.5,
-        stagger: 0.03,
-        ease: "power3.out",
-      }
-    );
-
-    // attach scrolltrigger
-    ScrollTrigger.create({
-      trigger: el,
-      start: "top bottom",
-      end: "bottom top",
-      animation: titleTween,
-      once: true,
-      // markers: true,
-    });
-  });
 }
 
 function changeDevImages() {
