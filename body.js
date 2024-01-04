@@ -56,14 +56,14 @@ function renderTech(matterContainer) {
   const width = window.innerWidth;
   const isMobile = width < 600;
   const isTablet = width < 992 && width > 600;
+  const circleY = isMobile ? -200 : -400;
 
   // module aliases
   var Engine = Matter.Engine,
     Render = Matter.Render,
     Runner = Matter.Runner,
     Bodies = Matter.Bodies,
-    Composite = Matter.Composite,
-    Events = Matter.Events;
+    Composite = Matter.Composite;
 
   // create an engine
   var engine = Engine.create();
@@ -129,7 +129,7 @@ function renderTech(matterContainer) {
 
     let circle = Bodies.circle(
       matterContainer.clientWidth / 2,
-      -500,
+      circleY,
       radius ? radius : 100,
       {
         friction: 0.3,
