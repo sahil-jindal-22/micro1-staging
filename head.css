@@ -544,12 +544,6 @@
 }
 
 /* ---- Global ---- */
-
-/* Text animation  */
-.word {
-  font-kerning: none;
-}
-
 /* Hero Border */
 @media screen and (min-width: 1350px) {
   .video_border-wrap {
@@ -675,60 +669,6 @@
 
 .mobile-how-itwork.is-talent .hiw-list-item:nth-child(1) .hiw-image-wrap {
   margin-top: -1.5vw;
-}
-
-/* Nav */
-.nav_menu-link,
-.footer_link,
-.sitemap_links {
-  position: relative;
-  transition: color 0.2s linear;
-}
-
-.nav_menu-link:hover,
-.footer_link:hover,
-.footer_link.w--current,
-.sitemap_links:hover {
-  color: #fff;
-}
-
-.nav_menu-link.current:after,
-.nav_menu-link:hover:after,
-.footer_link.current:after,
-.footer_link:hover:after,
-.sitemap_links:hover:after {
-  transform: scale(1);
-  transform-origin: left;
-}
-
-.nav_menu-link:after,
-.footer_link:after,
-.sitemap_links:after {
-  content: "";
-  position: absolute;
-  bottom: 4px;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background: #fff;
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
-  will-change: transform;
-}
-
-.footer_link:after {
-  bottom: -3px;
-}
-
-.sitemap_links:after {
-  bottom: 0px;
-}
-
-.dropdown .nav_menu-link:after,
-.w--current.nav_menu-link:after,
-.w--current.footer_link:after {
-  display: none;
 }
 
 /* Footer Logo */

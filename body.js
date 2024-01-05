@@ -56,7 +56,7 @@ function renderTech(matterContainer) {
   const width = window.innerWidth;
   const isMobile = width < 600;
   const isTablet = width < 992 && width > 600;
-  const circleY = isMobile ? -200 : -400;
+  const circleY = isMobile ? -200 : -550;
 
   // module aliases
   var Engine = Matter.Engine,
