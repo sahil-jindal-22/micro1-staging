@@ -1,4 +1,4 @@
-window.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
   if (window.innerWidth > 992) {
     // For homepage hero section
     changeDevImages();
@@ -6,21 +6,17 @@ window.addEventListener("DOMContentLoaded", function () {
 
   trackVisibility();
 
-  trackLoginBtn();
+  window.addEventListener("load", () =>
+    document.body.classList.add("page-loaded")
+  );
+});
 
+window.addEventListener("load", function () {
   initTech();
 
   // GSAP based code next
-  if (window.gsap !== undefined) {
-    ScrollTrigger.config({
-      normalizeScroll: true,
-    });
-
-    if (window.innerWidth > 992) {
-      initProcess();
-
-      initFAQ();
-    }
+  if (window.innerWidth > 992 && document.querySelector(".process_component")) {
+    initProcess();
   }
 });
 
@@ -226,10 +222,20 @@ function renderTech(matterContainer) {
   }, 2000);
 }
 
-function initProcess() {
-  const wrapper = document.querySelector(".process_component");
+async function initProcess() {
+  // Load GSAP
+  await loadScript(
+    "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"
+  );
+  await loadScript(
+    "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/ScrollTrigger.min.js"
+  );
 
-  if (!wrapper) return;
+  ScrollTrigger.config({
+    normalizeScroll: true,
+  });
+
+  const wrapper = document.querySelector(".process_component");
 
   const textList = wrapper.querySelectorAll(".process_text");
   const imgList = [
@@ -254,23 +260,6 @@ function initProcess() {
         textWrap.classList.add("is-active");
       },
     });
-  });
-}
-
-function initFAQ() {
-  const bg = document.querySelector(".faq_bg-gradient");
-
-  if (!bg) return;
-
-  gsap.to(bg, {
-    scrollTrigger: {
-      trigger: bg,
-      start: "top bottom",
-      end: "top -25%",
-      scrub: 1,
-    },
-    width: "100%",
-    borderRadius: 0,
   });
 }
 
@@ -311,50 +300,4 @@ function changeDevImages() {
       else target++;
     }, 5000);
   });
-}
-
-// Track login button
-function trackLoginBtn() {
-  const loginBtn = document.querySelector("#login-btn");
-
-  if (!loginBtn || !loginBtn.href.includes("login")) return;
-
-  if (location.href.includes("engineer")) return;
-
-  // Pass UTM data to the signup link
-  const { utm } = customTrackData;
-
-  let first_page, last_page;
-
-  if (customTrackData.first_page) {
-    first_page = document.createElement("a");
-    first_page.href = customTrackData.first_page;
-    first_page = first_page.pathname;
-  }
-
-  if (customTrackData.last_page) {
-    last_page = document.createElement("a");
-    last_page.href = customTrackData.last_page;
-    last_page = last_page.pathname;
-  }
-
-  const liveDomain = "www.client.micro1.ai";
-  const stagingDomain = "dev.d1y3udqq47tapp.amplifyapp.com";
-
-  let gptVetting = false;
-
-  if (location.href.includes("gpt") || first_page.includes("gpt"))
-    gptVetting = true;
-
-  const signupLink = `https://${
-    location.href.includes("staging") ? stagingDomain : liveDomain
-  }/login?utm_campaign=${utm.utm_campaign ? utm.utm_campaign : ""}&utm_medium=${
-    utm.utm_medium ? utm.utm_medium : ""
-  }&utm_source=${utm.utm_source ? utm.utm_source : ""}&utm_content=${
-    utm.utm_content ? utm.utm_content : ""
-  }&first_page=${first_page ? first_page : ""}&last_page=${
-    last_page ? last_page : ""
-  }&source=${gptVetting ? "gpt-vetting" : "search-talent"}`;
-
-  loginBtn.href = signupLink;
 }
