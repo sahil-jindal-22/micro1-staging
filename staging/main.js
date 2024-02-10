@@ -12,12 +12,17 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 window.addEventListener("load", function () {
-  initTech();
+  setTimeout(function () {
+    initTech();
 
-  // GSAP based code next
-  if (window.innerWidth > 992 && document.querySelector(".process_component")) {
-    initProcess();
-  }
+    // GSAP based code next
+    if (
+      window.innerWidth > 992 &&
+      document.querySelector(".process_component")
+    ) {
+      initProcess();
+    }
+  }, 100);
 });
 
 async function initTech() {
@@ -301,3 +306,116 @@ function changeDevImages() {
     }, 5000);
   });
 }
+
+// Swiper.js
+(() => {
+  window.addEventListener("load", function () {
+    setTimeout(swiper, 100);
+
+    async function swiper() {
+      const sliderWrapperEls = document.querySelectorAll(".swiper-component");
+
+      if (!sliderWrapperEls.length) return;
+
+      if (
+        sliderWrapperEls[0].closest(".hide-desktop") &&
+        window.innerWidth > 991
+      )
+        return;
+
+      await loadScript(
+        "https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"
+      );
+
+      const sliders = initSlider();
+
+      if (window.location.pathname.includes("/project/"))
+        projectSlider(sliders);
+    }
+  });
+
+  function initSlider() {
+    // Initialize swiper sliders
+    const sliders = [];
+
+    const sliderWrapperEls = Array.from(
+      document.querySelectorAll(".swiper-component")
+    );
+
+    sliderWrapperEls.forEach((wrapperEl) => {
+      const swiper = wrapperEl.querySelector(".swiper");
+
+      const slidesPerView = wrapperEl.dataset.slidesPerView
+        ? +wrapperEl.dataset.slidesPerView
+        : 1;
+
+      const desktopAutoHeight = wrapperEl.dataset.desktopAutoHeight;
+
+      const fadeEffect = wrapperEl.dataset.effectFade ? true : false;
+
+      const arrows = wrapperEl.querySelectorAll(
+        ".swiper-arrow-v2, .swiper-arrow-v3, .swiper-arrow-v4"
+      );
+
+      const slider = new Swiper(swiper, {
+        loop: true,
+        loopAdditionalSlides: 1,
+        slidesPerView: slidesPerView,
+        spaceBetween: 24,
+        speed: 600,
+        pagination: {
+          el: wrapperEl.querySelector(".swiper-pagination"),
+          clickable: true,
+          dynamicBullets: true,
+        },
+        ...(arrows && {
+          navigation: {
+            prevEl: arrows[0],
+            nextEl: arrows[1],
+          },
+        }),
+        breakpoints: {
+          0: {
+            autoHeight: true,
+            slidesPerView: 1,
+          },
+          992: {
+            autoHeight: desktopAutoHeight ? true : false,
+            slidesPerView: slidesPerView,
+          },
+        },
+        ...(fadeEffect && {
+          effect: "fade",
+          fadeEffect: {
+            crossFade: true,
+          },
+        }),
+      });
+
+      sliders.push(slider);
+
+      sliders.forEach((slider) => {
+        slider.on("slideChange", function () {
+          if (window.gsap !== undefined) ScrollTrigger.refresh();
+        });
+      });
+    });
+
+    return sliders;
+  }
+
+  // Load next project
+  function projectSlider(sliders) {
+    const curProjectTitle = document.querySelector("h1").textContent;
+
+    const projects = Array.from(
+      document.querySelectorAll(".project-card_title")
+    );
+
+    const curProjectIndex = projects.findIndex(
+      (project) => project.textContent === curProjectTitle
+    );
+
+    sliders[0].slideTo(curProjectIndex + 1);
+  }
+})();
