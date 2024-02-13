@@ -12,17 +12,13 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 window.addEventListener("load", function () {
-  setTimeout(function () {
-    initTech();
+  initTech();
 
-    // GSAP based code next
-    if (
-      window.innerWidth > 992 &&
-      document.querySelector(".process_component")
-    ) {
-      initProcess();
-    }
-  }, 100);
+  if (window.innerWidth > 992 && document.querySelector(".process_component")) {
+    initProcess();
+  }
+
+  pageResize();
 });
 
 async function initTech() {
@@ -55,8 +51,8 @@ function renderTech(matterContainer) {
 
   const THICCNESS = 60;
   const width = window.innerWidth;
-  const isMobile = width < 600;
-  const isTablet = width < 992 && width > 600;
+  const isMobile = width <= 767;
+  const isTablet = width < 992 && width > 767;
   const circleY = isMobile ? -200 : -550;
 
   // module aliases
@@ -309,29 +305,21 @@ function changeDevImages() {
 
 // Swiper.js
 (() => {
-  window.addEventListener("load", function () {
-    setTimeout(swiper, 100);
+  window.addEventListener("load", async function () {
+    const sliderWrapperEls = document.querySelectorAll(".swiper-component");
 
-    async function swiper() {
-      const sliderWrapperEls = document.querySelectorAll(".swiper-component");
+    if (!sliderWrapperEls.length) return;
 
-      if (!sliderWrapperEls.length) return;
+    if (sliderWrapperEls[0].closest(".hide-desktop") && window.innerWidth > 991)
+      return;
 
-      if (
-        sliderWrapperEls[0].closest(".hide-desktop") &&
-        window.innerWidth > 991
-      )
-        return;
+    await loadScript(
+      "https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"
+    );
 
-      await loadScript(
-        "https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"
-      );
+    const sliders = initSlider();
 
-      const sliders = initSlider();
-
-      if (window.location.pathname.includes("/project/"))
-        projectSlider(sliders);
-    }
+    if (window.location.pathname.includes("/project/")) projectSlider(sliders);
   });
 
   function initSlider() {
@@ -419,3 +407,45 @@ function changeDevImages() {
     sliders[0].slideTo(curProjectIndex + 1);
   }
 })();
+
+function pageResize() {
+  const debounce = (callback, wait) => {
+    let timeoutId = null;
+    return (...args) => {
+      window.clearTimeout(timeoutId);
+      timeoutId = window.setTimeout(() => {
+        callback.apply(null, args);
+      }, wait);
+    };
+  };
+
+  const initialWidth = window.innerWidth;
+
+  const desktop = initialWidth >= 992;
+  const tablet = initialWidth < 992 && initialWidth > 767;
+  const mobilePotrait = initialWidth <= 767 && initialWidth > 478;
+  const mobile = initialWidth <= 478;
+
+  console.log(desktop, tablet, mobilePotrait, mobile);
+
+  const handleresize = debounce((ev) => {
+    const curWidth = window.innerWidth;
+
+    console.log(curWidth);
+
+    if (desktop && curWidth < 992) {
+      location.reload();
+    }
+    if (tablet && (curWidth >= 992 || curWidth <= 767)) {
+      location.reload();
+    }
+    if (mobilePotrait && (curWidth > 767 || curWidth <= 478)) {
+      location.reload();
+    }
+    if (mobile && curWidth > 478) {
+      location.reload();
+    }
+  }, 250);
+
+  window.addEventListener("resize", handleresize);
+}
