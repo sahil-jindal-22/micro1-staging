@@ -14,7 +14,10 @@ document.addEventListener("DOMContentLoaded", function () {
 window.addEventListener("load", function () {
   initTech();
 
-  if (window.innerWidth > 992 && document.querySelector(".process_component")) {
+  if (
+    window.innerWidth >= 992 &&
+    document.querySelector(".process_component")
+  ) {
     initProcess();
   }
 
@@ -426,12 +429,8 @@ function pageResize() {
   const mobilePotrait = initialWidth <= 767 && initialWidth > 478;
   const mobile = initialWidth <= 478;
 
-  console.log(desktop, tablet, mobilePotrait, mobile);
-
   const handleresize = debounce((ev) => {
     const curWidth = window.innerWidth;
-
-    console.log(curWidth);
 
     if (desktop && curWidth < 992) {
       location.reload();
