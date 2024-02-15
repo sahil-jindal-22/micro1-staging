@@ -8,7 +8,7 @@
   transition-property: opacity;
   transition-duration: 600ms;
   will-change: transform, border-radius, opacity;
-  animation: scaleCirc 2.5s infinite paused;
+  animation: scaleGlobe 3.5s ease-in-out infinite paused;
   border: 1px solid rgba(202 204 255 / 30%);
   z-index: -2;
 }
@@ -19,24 +19,21 @@
 }
 
 .talent_bg-globe-circ.is-small {
-  animation: scaleCirc 2.5s infinite paused;
-  animation-delay: 500ms;
+  animation: scaleGlobe 3.5s ease-in-out infinite paused;
+  animation-delay: 750ms;
 }
 
-@keyframes scaleCirc {
+@keyframes scaleGlobe {
   0% {
-    transform: scale(0.8);
-    opacity: 0.7;
-  }
-  50% {
-    opacity: 0.5;
-  }
-  95% {
-    transform: scale(1.5);
+    transform: scale(0.6);
     opacity: 0;
   }
+  40% {
+    opacity: 0.5;
+  }
+  95%,
   100% {
-    transform: scale(0.8);
+    transform: scale(1.5);
     opacity: 0;
   }
 }
@@ -106,16 +103,16 @@
   0% {
     transform: rotate(0deg);
   }
-  15% {
-    transform: rotate(20deg);
+  10% {
+    transform: rotate(13deg);
   }
-  30% {
+  20% {
     transform: rotate(0deg);
   }
-  45% {
-    transform: rotate(20deg);
+  30% {
+    transform: rotate(13deg);
   }
-  60%,
+  40%,
   100% {
     transform: rotate(0deg);
   }
@@ -130,30 +127,30 @@
 }
 
 .is-visible #hour {
-  animation: time 30s linear infinite;
+  animation: time 50s linear infinite;
   transform-box: fill-box;
   transform-origin: bottom;
 }
 
 .is-visible #minute {
-  animation: time 5s linear infinite;
+  animation: time 7s linear infinite;
   transform-box: fill-box;
 }
 
 .is-visible #dollar-icon {
-  animation: dollarIcon 3s linear infinite;
+  animation: dollarIcon 5s linear infinite;
 }
 
 .is-visible #hammer-icon {
   transform-origin: bottom left;
   transform-box: content-box;
-  animation: hammerIcon 3.5s ease-in-out infinite;
+  animation: hammerIcon 5s ease-in-out infinite;
 }
 
 .is-visible .scale-circ {
   transform-origin: center;
   transform-box: fill-box;
-  animation: scaleCircMedium 3s infinite;
+  animation: 3s ease-in-out infinite scaleCircMedium;
 }
 
 /* -- Solution -- */
@@ -271,7 +268,7 @@
   transition-property: opacity;
   transition-duration: 600ms;
   will-change: transform, border-radius, opacity;
-  animation: scaleCircSmall 2.5s infinite ease-in-out;
+  animation: scaleCircMedium 3s infinite ease-in-out;
   border: 1px solid #f5e181;
   z-index: -2;
 }
@@ -360,6 +357,10 @@
   animation: moveSquare 7s infinite linear;
 }
 
+.is-visible #bg-square-1 {
+  animation-duration: 9s;
+}
+
 @keyframes moveSquare {
   0% {
     transform: scale(1) translateY(-100px);
@@ -379,22 +380,22 @@
   opacity: 0;
 }
 .is-visible #group-1 {
-  animation: squareOpacity1 9s linear infinite 750ms;
+  animation: squareOpacity1 11s linear infinite 750ms;
 }
 .is-visible #group-2 {
-  animation: squareOpacity2 9s linear infinite 750ms;
+  animation: squareOpacity2 11s linear infinite 750ms;
 }
 .is-visible #group-3 {
-  animation: squareOpacity3 9s linear infinite 750ms;
+  animation: squareOpacity3 11s linear infinite 750ms;
 }
 
 @keyframes squareOpacity1 {
   0% {
     opacity: 0;
   }
-  10%,
-  20% {
-    opacity: 0.7;
+  7%,
+  26% {
+    opacity: 0.5;
   }
   33%,
   100% {
@@ -407,9 +408,9 @@
   33% {
     opacity: 0;
   }
-  43%,
-  53% {
-    opacity: 0.7;
+  40%,
+  59% {
+    opacity: 0.5;
   }
   66%,
   100% {
@@ -422,9 +423,9 @@
   66% {
     opacity: 0;
   }
-  76%,
-  86% {
-    opacity: 0.7;
+  73%,
+  93% {
+    opacity: 0.5;
   }
   100% {
     opacity: 0;
@@ -540,7 +541,7 @@
 }
 
 .is-visible .offeriings_bg-circ {
-  animation: scaleCircSmall 2.5s infinite ease-in-out;
+  animation: scaleCircMedium 2.5s infinite ease-in-out;
 }
 
 /* ---- Global ---- */
