@@ -269,12 +269,12 @@
   transition-duration: 600ms;
   will-change: transform, border-radius, opacity;
   animation: scaleCircMedium 3s infinite ease-in-out;
-  border: 1px solid #f5e181;
+  border: 1px solid #4c849a;
   z-index: -2;
 }
 
 .talent_solution_bg-circ.is-2 .talent_solution_bg-circ-bg {
-  border-color: #87cbf7;
+  border-color: #7e7e7e;
 }
 
 .talent_solution_bg-circ.is-3 .talent_solution_bg-circ-bg {
