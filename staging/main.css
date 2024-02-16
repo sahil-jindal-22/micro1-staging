@@ -269,30 +269,8 @@
   transition-duration: 600ms;
   will-change: transform, border-radius, opacity;
   animation: scaleCircMedium 3s infinite ease-in-out;
-  border: 1px solid #4c849a;
+  border: 1px solid #5e6be2;
   z-index: -2;
-}
-
-.talent_solution_bg-circ.is-2 .talent_solution_bg-circ-bg {
-  border-color: #7e7e7e;
-}
-
-.talent_solution_bg-circ.is-3 .talent_solution_bg-circ-bg {
-  border-color: #4757eb;
-}
-
-@media screen and (max-width: 767px) {
-  .is-visible .talent_solution_bg-circ-bg {
-    border-color: #f5e2817c;
-  }
-
-  .talent_solution_bg-circ.is-2 .talent_solution_bg-circ-bg {
-    border-color: #87caf785;
-  }
-
-  .talent_solution_bg-circ.is-3 .talent_solution_bg-circ-bg {
-    border-color: #4757eb80;
-  }
 }
 
 /* 2nd card */
