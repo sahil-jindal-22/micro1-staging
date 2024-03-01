@@ -522,6 +522,47 @@
   animation: scaleCircMedium 2.5s infinite ease-in-out;
 }
 
+/* 4th card */
+.offerings_bg-ai-path {
+  -webkit-mask-image: url("https://uploads-ssl.webflow.com/65cfa850aaff127644e69130/65e1fff974d4d4ac700418e6_Group%20(17).svg");
+  mask-image: url("https://uploads-ssl.webflow.com/65cfa850aaff127644e69130/65e1fff974d4d4ac700418e6_Group%20(17).svg");
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+}
+
+.offerings_bg-ai-circ {
+  background-image: radial-gradient(
+    circle,
+    rgb(94 92 203 / 44%) 0%,
+    rgb(94 92 203) 50%,
+    rgba(0, 212, 255, 0) 100%
+  );
+}
+
+.is-visible .offerings_bg-ai-circ {
+  animation: ai-circ 5s linear infinite;
+}
+
+@keyframes ai-circ {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  40% {
+    transform: scale(12);
+    opacity: 1;
+  }
+  80%,
+  100% {
+    opacity: 0;
+    transform: scale(12);
+  }
+}
+
 /* ---- Global ---- */
 /* Hero Border */
 @media screen and (min-width: 1350px) {
