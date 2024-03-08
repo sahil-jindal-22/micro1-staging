@@ -411,7 +411,7 @@
 }
 
 /* -- Offerings -- */
-.offerings_card:hover .offerings_bg-gradient {
+.offerings_item:hover .offerings_bg-gradient {
   opacity: 1;
 }
 
@@ -537,8 +537,8 @@
 .offerings_bg-ai-circ {
   background-image: radial-gradient(
     circle,
-    rgb(94 92 203 / 44%) 0%,
-    rgb(94 92 203) 50%,
+    rgb(156 154 255) 0,
+    rgb(140 137 255) 50%,
     rgba(0, 212, 255, 0) 100%
   );
 }
