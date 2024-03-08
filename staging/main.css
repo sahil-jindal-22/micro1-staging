@@ -543,8 +543,16 @@
   );
 }
 
-.is-visible .offerings_bg-ai-circ {
-  animation: ai-circ 5s linear infinite;
+@media screen and (min-width: 500px) {
+  .is-visible .offerings_bg-ai-circ {
+    animation: ai-circ 5s linear infinite;
+  }
+}
+
+@media screen and (max-width: 499px) {
+  .is-visible .offerings_bg-ai-circ {
+    animation: ai-circ-mob 5s linear infinite;
+  }
 }
 
 @keyframes ai-circ {
@@ -560,6 +568,22 @@
   100% {
     opacity: 0;
     transform: scale(12);
+  }
+}
+
+@keyframes ai-circ-mob {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  40% {
+    transform: scale(8);
+    opacity: 1;
+  }
+  80%,
+  100% {
+    opacity: 0;
+    transform: scale(8);
   }
 }
 

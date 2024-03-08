@@ -40,8 +40,6 @@ async function initTech() {
         renderTech(techContainer);
 
         observer.unobserve(entry.target);
-
-        console.log("done");
       }
     });
   }, options);
@@ -56,7 +54,7 @@ function renderTech(matterContainer) {
   const width = window.innerWidth;
   const isMobile = width <= 767;
   const isTablet = width < 992 && width > 767;
-  const circleY = isMobile ? -200 : -550;
+  const circleY = isMobile ? -200 : -300;
 
   // module aliases
   var Engine = Matter.Engine,
@@ -85,64 +83,30 @@ function renderTech(matterContainer) {
   [...document.querySelectorAll(".tech-matter_logos img")].forEach(function (
     img
   ) {
-    const size = img.attributes.render.value;
-    let radius, scale;
-    const img2 = document.createElement("svg");
-    img2.src = img.src;
-
-    if (size == "big") {
-      radius = 77;
-      scale = 1.5;
-      if (isTablet) {
-        radius = 62;
-        scale = 1.2;
-      }
-      if (isMobile) {
-        radius = 36;
-        scale = 0.7;
-      }
-    }
-    if (size == "medium") {
-      radius = 62;
-      scale = 1.2;
-      if (isTablet) {
-        radius = 52;
-        scale = 1;
-      }
-      if (isMobile) {
-        radius = 29;
-        scale = 0.57;
-      }
-    }
-    if (size == "small") {
-      radius = 51;
+    let radius = 62;
+    let scale = 1.2;
+    if (isTablet) {
+      radius = 52;
       scale = 1;
-      if (isTablet) {
-        radius = 47;
-        scale = 0.9;
-      }
-      if (isMobile) {
-        radius = 26;
-        scale = 0.5;
-      }
+    }
+    if (isMobile) {
+      radius = 29;
+      scale = 0.57;
     }
 
-    let circle = Bodies.circle(
-      matterContainer.clientWidth / 2,
-      circleY,
-      radius ? radius : 100,
-      {
-        friction: 0.3,
-        restitution: 0.2,
-        render: {
-          sprite: {
-            texture: img.src,
-            yScale: scale ? scale : 2,
-            xScale: scale ? scale : 2,
-          },
+    const circleX = Math.floor(Math.random() * matterContainer.clientWidth);
+
+    let circle = Bodies.circle(circleX, circleY, radius ? radius : 100, {
+      friction: 0.3,
+      restitution: 0.2,
+      render: {
+        sprite: {
+          texture: img.src,
+          yScale: scale ? scale : 2,
+          xScale: scale ? scale : 2,
         },
-      }
-    );
+      },
+    });
     Composite.add(engine.world, circle);
   });
 
