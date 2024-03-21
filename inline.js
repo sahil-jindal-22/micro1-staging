@@ -136,6 +136,54 @@ const URLParams = new URLSearchParams(location.search);
 
 // User Tracking
 (() => {
+  // Convert social referral to UTMs
+  (() => {
+    const ref = document.referrer;
+    const refTwitter = ref.includes("t.co");
+    const refLinkedin = ref.includes("linkedin.com");
+
+    if (!refTwitter && !refLinkedin) return;
+
+    if (getCookieValue("utm_cookie_contact")) return;
+
+    let refSource;
+    const utm_cookie_contact = {};
+
+    if (refTwitter) refSource = "Twitter";
+    if (refLinkedin) refSource = "LinkedIn";
+
+    utm_cookie_contact.utm_source = refSource;
+    utm_cookie_contact.utm_medium = "social";
+
+    createCookie("utm_cookie_contact", utm_cookie_contact, true);
+  })();
+
+  // Track referring site
+  (() => {
+    let refCookie = getCookieValue("cus_ref");
+
+    if (refCookie) {
+      refCookie = decodeURIComponent(refCookie);
+      customTrackData.cusRef = refCookie;
+    }
+
+    const ref = document.referrer;
+
+    if (!ref) return;
+
+    if (
+      refCookie &&
+      (ref.includes("www.micro1.ai") ||
+        ref.includes("staging") ||
+        ref.includes("meetings"))
+    )
+      return;
+
+    createCookie("cus_ref", ref);
+
+    customTrackData.cusRef = ref;
+  })();
+
   // Get the UTM & store as cookie
   (() => {
     const utm_source = URLParams.get("utm_source");
@@ -341,6 +389,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       ctd_ref: customTrackData.ref ? customTrackData.ref : "",
       lead_type: "microLab",
       is_microlab: "Yes",
+      ctd_cus_ref: customTrackData.cusRef ? customTrackData.cusRef : "",
     },
   };
 
@@ -369,9 +418,18 @@ document.addEventListener("DOMContentLoaded", async function () {
         hireTalentEmbedContainer.style.opacity = 1;
       },
       onSubmit: () => {
-        document.location.href = `https://${
-          staging ? "micro1-staging.webflow.io" : "www.micro1.ai"
-        }/thank-you`;
+        setTimeout(() => {
+          const twitterSource =
+            customTrackData.utm.utm_source && customTrackData.utm.utm_campaign
+              ? true
+              : false;
+
+          document.location.href = `https://${
+            staging ? "micro1-staging.webflow.io" : "www.micro1.ai"
+          }/thank-you${
+            twitterSource ? `?utm_source=${customTrackData.utm.utm_source}` : ""
+          }`;
+        }, 2000);
       },
       ...options,
     });
@@ -383,9 +441,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     const openForm = window.tf.createPopup(hireMicroLabFormID, {
       onSubmit: function () {
-        document.location.href = `https://${
-          staging ? "micro1-staging.webflow.io" : "www.micro1.ai"
-        }/thank-you-microlab`;
+        setTimeout(
+          () =>
+            (document.location.href = `https://${
+              staging ? "micro1-staging.webflow.io" : "www.micro1.ai"
+            }/thank-you-microlab`),
+          2000
+        );
       },
       onClose: function () {
         document.querySelector("body").classList.remove("no-scroll");
