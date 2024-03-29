@@ -5,13 +5,11 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   trackVisibility();
-
-  window.addEventListener("load", () =>
-    document.body.classList.add("page-loaded")
-  );
 });
 
 window.addEventListener("load", function () {
+  document.body.classList.add("page-loaded");
+
   initTech();
 
   if (
@@ -273,29 +271,34 @@ function changeDevImages() {
 // Swiper.js
 (() => {
   window.addEventListener("load", async function () {
-    const sliderWrapperEls = document.querySelectorAll(".swiper-component");
+    const sliderWrapperEls = Array.from(
+      document.querySelectorAll(".swiper-component")
+    );
+
+    console.log(sliderWrapperEls);
 
     if (!sliderWrapperEls.length) return;
 
     if (sliderWrapperEls[0].closest(".hide-desktop") && window.innerWidth > 991)
       return;
 
+    if (sliderWrapperEls[0].dataset.mobileOnly && window.innerWidth > 991)
+      return;
+
     await loadScript(
       "https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"
     );
 
-    const sliders = initSlider();
+    const sliders = initSlider(sliderWrapperEls);
+
+    console.log(sliders);
 
     if (window.location.pathname.includes("/project/")) projectSlider(sliders);
   });
 
-  function initSlider() {
+  function initSlider(sliderWrapperEls) {
     // Initialize swiper sliders
     const sliders = [];
-
-    const sliderWrapperEls = Array.from(
-      document.querySelectorAll(".swiper-component")
-    );
 
     sliderWrapperEls.forEach((wrapperEl) => {
       const swiper = wrapperEl.querySelector(".swiper");
@@ -308,12 +311,14 @@ function changeDevImages() {
 
       const fadeEffect = wrapperEl.dataset.effectFade ? true : false;
 
+      const loop = wrapperEl.dataset.disableLoop ? false : true;
+
       const arrows = wrapperEl.querySelectorAll(
         ".swiper-arrow-v2, .swiper-arrow-v3, .swiper-arrow-v4"
       );
 
       const slider = new Swiper(swiper, {
-        loop: true,
+        loop: loop,
         loopAdditionalSlides: 1,
         slidesPerView: slidesPerView,
         spaceBetween: 24,

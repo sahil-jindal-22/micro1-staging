@@ -153,260 +153,31 @@
   animation: 3s ease-in-out infinite scaleCircMedium;
 }
 
-/* -- Solution -- */
-/* Main Graphic */
-.solution_bg_img-green {
-  -webkit-mask-image: url("https://uploads-ssl.webflow.com/65776646d74b9f7b4f3cacf1/658480904bbdec41f00efc01_main.svg");
-  mask-image: url("https://uploads-ssl.webflow.com/65776646d74b9f7b4f3cacf1/658480904bbdec41f00efc01_main.svg");
-  -webkit-mask-size: contain;
-  mask-size: contain;
-  mask-repeat: no-repeat;
-  mask-position: center;
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-}
-
-.solution_bg_img-blue {
-  -webkit-mask-image: url("https://uploads-ssl.webflow.com/65776646d74b9f7b4f3cacf1/6584808d8f14d04961d69341_main%20(1).svg");
-  mask-image: url("https://uploads-ssl.webflow.com/65776646d74b9f7b4f3cacf1/6584808d8f14d04961d69341_main%20(1).svg");
-  -webkit-mask-size: contain;
-  mask-size: contain;
-  mask-repeat: no-repeat;
-  mask-position: center;
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-}
-
-.is-visible .solution_bg_gradient-green,
-.is-visible .solution_bg_gradient-blue {
-  animation: moveGradient 2s linear infinite;
-}
-
-@keyframes moveGradient {
-  0% {
-    transform: translateY(100%);
-  }
-  50% {
-    transform: translateY(-150%);
-  }
-  100% {
-    transform: translateY(-350%);
-  }
-}
-
-#bottom,
-#top-lines {
-  transform-box: content-box;
-  transform-origin: top;
-}
-
-.is-visible #bottom {
-  animation: lines 2s linear infinite;
-}
-
-.is-visible #top-lines {
-  animation: lines 2s linear infinite 1s backwards;
-}
-
-@keyframes lines {
-  0% {
-    transform: translateY(9%);
-    opacity: 0;
-  }
-  35% {
-    transform: translateY(0%);
-    opacity: 1;
-  }
-  70%,
-  100% {
-    transform: translateY(-9%);
-    opacity: 0;
-  }
-}
-
-.is-visible #top-dots {
-  animation: dots 2s linear infinite 1s backwards;
-}
-
-@keyframes dots {
-  0%,
-  20% {
-    opacity: 0;
-  }
-  45% {
-    opacity: 1;
-  }
-  70%,
-  100% {
-    opacity: 0;
-  }
-}
-
-#stars path {
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-.is-visible #stars path {
-  animation: stars 2s infinite ease;
-}
-
-@keyframes stars {
-  0% {
-    transform: rotate(0deg) scale(1);
-  }
-  50% {
-    transform: rotate(180deg) scale(0.5);
-  }
-  100% {
-    transform: rotate(360deg) scale(1);
-  }
-}
-
-/* 1st card */
-.is-visible .talent_solution_bg-circ-bg {
-  transition-property: opacity;
-  transition-duration: 600ms;
-  will-change: transform, border-radius, opacity;
-  animation: scaleCircMedium 3s infinite ease-in-out;
-  border: 1px solid #5e6be2;
-  z-index: -2;
-}
-
-/* 2nd card */
-.is-visible #plus-icon {
-  animation: rotateIcon 5s infinite linear;
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-#line-1 {
-  transform: translateX(-30%);
-  transform-box: view-box;
-}
-
-.is-visible #line-1 {
-  animation: gridHighlight 7s infinite linear;
-}
-
-@keyframes gridHighlight {
-  0% {
-    transform: translateX(-30%);
-  }
-  70%,
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-#line-2 {
-  transform-box: view-box;
-  transform: translateX(75%);
-}
-
-.is-visible #line-2 {
-  animation: gridHighlight2 7s infinite linear 3.5s;
-}
-
-@keyframes gridHighlight2 {
-  0% {
-    transform: translateX(75%);
+/* -- Solutions  -- */
+@media screen and (min-width: 992px) {
+  .solution_path-img {
+    -webkit-mask-image: url("https://uploads-ssl.webflow.com/65fb502f8371aab95edce0e0/65ff143bbf27147c20b0beec_Group%201413371878%20(1)%20(1).png");
+    mask-image: url("https://uploads-ssl.webflow.com/65fb502f8371aab95edce0e0/65ff143bbf27147c20b0beec_Group%201413371878%20(1)%20(1).png");
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
   }
 
-  100% {
-    transform: translateX(-100%);
+  .is-visible .solution_path-gradient {
+    animation: moveGradient 7s linear infinite;
   }
-}
 
-.is-visible #solution-globe {
-  animation: rotateIcon 15s linear infinite;
-}
-
-/* 3rd card */
-#bg-square-1,
-#bg-square-2 {
-  transform-box: content-box;
-  transform-origin: center;
-  transform: translateY(-100px);
-}
-
-.is-visible #bg-square-1,
-.is-visible #bg-square-2 {
-  animation: moveSquare 7s infinite linear;
-}
-
-.is-visible #bg-square-1 {
-  animation-duration: 9s;
-}
-
-@keyframes moveSquare {
-  0% {
-    transform: scale(1) translateY(-100px);
-    opacity: 1;
-  }
-  80%,
-  100% {
-    transform: scale(1) translateY(200px);
-    opacity: 0.5;
-  }
-}
-
-/* 4th card */
-#group-1,
-#group-2,
-#group-3 {
-  opacity: 0;
-}
-.is-visible #group-1 {
-  animation: squareOpacity1 11s linear infinite 750ms;
-}
-.is-visible #group-2 {
-  animation: squareOpacity2 11s linear infinite 750ms;
-}
-.is-visible #group-3 {
-  animation: squareOpacity3 11s linear infinite 750ms;
-}
-
-@keyframes squareOpacity1 {
-  0% {
-    opacity: 0;
-  }
-  7%,
-  26% {
-    opacity: 0.7;
-  }
-  33%,
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes squareOpacity2 {
-  0%,
-  33% {
-    opacity: 0;
-  }
-  40%,
-  59% {
-    opacity: 0.7;
-  }
-  66%,
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes squareOpacity3 {
-  0%,
-  66% {
-    opacity: 0;
-  }
-  73%,
-  93% {
-    opacity: 0.7;
-  }
-  100% {
-    opacity: 0;
+  @keyframes moveGradient {
+    0% {
+      transform: translateX(-100%);
+    }
+    80%,
+    100% {
+      transform: translateX(650%);
+    }
   }
 }
 
