@@ -10,6 +10,8 @@ document.addEventListener("DOMContentLoaded", function () {
 window.addEventListener("load", function () {
   document.body.classList.add("page-loaded");
 
+  setTimeout(() => this.document.body.classList.add("delay-complete"), 3000);
+
   initTech();
 
   if (
@@ -250,22 +252,28 @@ function trackVisibility() {
 
 function changeDevImages() {
   const imgWrappers = document.querySelectorAll(".talent_bg_dev-images");
+  const allImages = document.querySelectorAll(".talent_bg_dev-images img");
 
   if (!imgWrappers.length > 0) return;
 
-  imgWrappers.forEach((_, i) => {
-    const images = imgWrappers[i].querySelectorAll("img");
+  let target = 1;
+  let count = 0;
 
-    let target = 1;
+  const interval = setInterval(function () {
+    allImages.forEach((img) => img.classList.remove("is-visible"));
 
-    setInterval(() => {
-      images.forEach((img) => img.classList.remove("is-visible"));
+    imgWrappers.forEach((wrapper) => {
+      const images = wrapper.querySelectorAll("img");
+
       images[target].classList.add("is-visible");
+    });
 
-      if (target == 2) target = 0;
-      else target++;
-    }, 5000);
-  });
+    if (target == 2) target = 0;
+    else target++;
+
+    if (count == 5) clearInterval(interval);
+    else count++;
+  }, 5000);
 }
 
 // Swiper.js
@@ -294,6 +302,8 @@ function changeDevImages() {
     console.log(sliders);
 
     if (window.location.pathname.includes("/project/")) projectSlider(sliders);
+
+    if (window.innerWidth <= 478) addReadMore(sliders);
   });
 
   function initSlider(sliderWrapperEls) {
@@ -377,6 +387,33 @@ function changeDevImages() {
     );
 
     sliders[0].slideTo(curProjectIndex + 1);
+  }
+
+  // Add read more to reviews
+  function addReadMore(sliders) {
+    const reviewEls = document.querySelectorAll(".review_text");
+
+    if (!reviewEls.length) return;
+
+    const createReadMoreEl = function (reviewEl) {
+      const readMoreEl = document.createElement("div");
+      readMoreEl.classList.add("review_read-more");
+      readMoreEl.textContent = "Read more";
+      readMoreEl.addEventListener("click", function () {
+        reviewEl.classList.remove("is-long");
+        readMoreEl.remove();
+        sliders.forEach((slider) => slider.update());
+      });
+
+      return readMoreEl;
+    };
+
+    reviewEls.forEach((reviewEl) => {
+      if (reviewEl.clientHeight >= 145) {
+        reviewEl.classList.add("is-long");
+        reviewEl.insertAdjacentElement("afterend", createReadMoreEl(reviewEl));
+      }
+    });
   }
 })();
 
