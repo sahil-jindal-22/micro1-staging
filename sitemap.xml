@@ -12,11 +12,6 @@
     </url>
     <url>
         <loc>
-            https://www.micro1.ai/agi
-        </loc>
-    </url>
-    <url>
-        <loc>
             https://www.micro1.ai/clutch
         </loc>
     </url>
@@ -443,6 +438,11 @@
     <url>
         <loc>
             https://www.micro1.ai/case-study/docdraft
+        </loc>
+    </url>
+    <url>
+        <loc>
+            https://www.micro1.ai/cybertruck
         </loc>
     </url>
 </urlset>

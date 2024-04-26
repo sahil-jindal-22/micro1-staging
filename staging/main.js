@@ -386,7 +386,7 @@ function changeDevImages() {
       (project) => project.textContent === curProjectTitle
     );
 
-    sliders[0].slideTo(curProjectIndex + 1);
+    sliders[0].slideTo(curProjectIndex + 2);
   }
 
   // Add read more to reviews
