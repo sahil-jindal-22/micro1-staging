@@ -704,12 +704,3 @@
     font-weight: 700;
   }
 }
-
-.delay-complete .talent_bg_dev-img {
-  display: block;
-}
-
-.page-loaded [data-show-after-load="this"],
-.page-loaded [data-show-after-load="child-imgs"] img {
-  display: initial;
-}
